@@ -21,9 +21,9 @@ export const actions = {
     const body = {
       channel_id: 1,
       expires_at: 1602288000,
-      allowed_cors_origins: ['http://localhost:3000']
+      allowed_cors_origins: ['https://nuxt-store.netlify.app/']
     }
-    const { data } = await this.$axios.$post('http://localhost:4200/api/auth', {
+    const { data } = await this.$axios.$post(`${process.env.SERVER_URL}/api/auth`, {
       authorizeUrl: process.env.AUTHORIZE_URL,
       body,
       headers: {
