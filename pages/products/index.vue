@@ -30,12 +30,14 @@
 import { SfProductCard } from '@storefront-ui/vue'
 export default {
   components: { SfProductCard },
+  middleware: 'auth',
   async fetch () {
+    await this.$store.dispatch('core/authorize')
     const result = await this.$axios({
       method: 'POST',
       url: process.env.BASE_URL,
       headers: {
-        Authorization: `Bearer ${this.$store.getters['core/getToken']}`
+        Authorization: `Bearer ${this.getToken}`
       },
       data: {
         query: `
@@ -70,42 +72,6 @@ export default {
     })
     this.category = result.data.data.site
   },
-  // async asyncData ({ isDev, route, store, env, params, query, req, res, redirect, error, $axios }) {
-  //   $axios.setHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJlYXQiOjE2MDIyODgwMDAsInN1Yl90eXBlIjoyLCJ0b2tlbl90eXBlIjoxLCJjb3JzIjpbXSwiY2lkIjoxLCJpYXQiOjE1ODk4MTE5NDIsInN1YiI6ImRlN2EwMzVmaThtdXNrZjVycnJmc3Qzdzhid3pjbiIsInNpZCI6MTAwMTEzNTgwOCwiaXNzIjoiQkMifQ.wqbOIcRMpYwWJS-eAfOx0L8XVYNq82X9UBX5TD6zNhmwdyqVccAe0IZVecep2Ljtx9YwuICGVmAqEUqo_NoteA')
-  //   const result = await $axios.$post(process.env.BASE_URL, {
-  //     query: `
-  //         query paginateProducts {
-  //           site {
-  //             products {
-  //               pageInfo {
-  //                 startCursor
-  //                 endCursor
-  //               }
-  //               edges {
-  //                 cursor
-  //                 node {
-  //                   entityId
-  //                   name
-  //                   path
-  //                   defaultImage {
-  //                     url(width: 150)
-  //                   }
-  //                   prices {
-  //                     price {
-  //                       value
-  //                     }
-  //                   }
-  //                 }
-  //               }
-  //             }
-  //           }
-  //         }
-  //       `
-  //   })
-  //   return {
-  //     category: result.data.site
-  //   }
-  // },
   data () {
     return {
       breadcrumbs: [
