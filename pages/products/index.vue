@@ -5,10 +5,10 @@
     </div>
     <div class="main section">
       <div class="products">
-        <p v-if="$fetchState.pending">
+        <!-- <p v-if="$fetchState.pending">
           Fetching post...
-        </p>
-        <div v-else class="products__list">
+        </p> -->
+        <div class="products__list">
           <SfProductCard
             v-for="(product, i) in category.products.edges"
             :key="i"
@@ -46,7 +46,7 @@ export default {
                 edges {
                   cursor
                   node {
-                    entityId 
+                    entityId
                     name
                     path
                     defaultImage {
@@ -67,6 +67,42 @@ export default {
     })
     this.category = result.data.data.site
   },
+  // async asyncData ({ isDev, route, store, env, params, query, req, res, redirect, error, $axios }) {
+  //   $axios.setHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJlYXQiOjE2MDIyODgwMDAsInN1Yl90eXBlIjoyLCJ0b2tlbl90eXBlIjoxLCJjb3JzIjpbXSwiY2lkIjoxLCJpYXQiOjE1ODk4MTE5NDIsInN1YiI6ImRlN2EwMzVmaThtdXNrZjVycnJmc3Qzdzhid3pjbiIsInNpZCI6MTAwMTEzNTgwOCwiaXNzIjoiQkMifQ.wqbOIcRMpYwWJS-eAfOx0L8XVYNq82X9UBX5TD6zNhmwdyqVccAe0IZVecep2Ljtx9YwuICGVmAqEUqo_NoteA')
+  //   const result = await $axios.$post(process.env.BASE_URL, {
+  //     query: `
+  //         query paginateProducts {
+  //           site {
+  //             products {
+  //               pageInfo {
+  //                 startCursor
+  //                 endCursor
+  //               }
+  //               edges {
+  //                 cursor
+  //                 node {
+  //                   entityId
+  //                   name
+  //                   path
+  //                   defaultImage {
+  //                     url(width: 150)
+  //                   }
+  //                   prices {
+  //                     price {
+  //                       value
+  //                     }
+  //                   }
+  //                 }
+  //               }
+  //             }
+  //           }
+  //         }
+  //       `
+  //   })
+  //   return {
+  //     category: result.data.site
+  //   }
+  // },
   data () {
     return {
       breadcrumbs: [
