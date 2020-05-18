@@ -52,12 +52,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.BASE_URL,
-    proxy: true
-  },
-  proxy: {
-
-    '/api/': { target: 'https://api.bigcommerce.com', pathRewrite: { '^/api/': '' } }
+    baseURL: process.env.BASE_URL
   },
   /*
    ** Build configuration
