@@ -1,7 +1,9 @@
 <template>
   <div>
     <SHeader />
-    <nuxt />
+    <main>
+      <nuxt />
+    </main>
     <SFooter />
   </div>
 </template>
@@ -59,5 +61,9 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+main {
+  padding-top: 50px;
 }
 </style>

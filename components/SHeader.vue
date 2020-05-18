@@ -16,9 +16,9 @@
     @change:search="searchValue = $event"
   >
     <template #navigation>
-      <SfHeaderNavigationItem v-for="item in navigation" :key="item">
-        <SfLink href="#">
-          {{ item }}
+      <SfHeaderNavigationItem v-for="item in navigation" :key="item.title">
+        <SfLink :href="item.link">
+          {{ item.title }}
         </SfLink>
       </SfHeaderNavigationItem>
     </template>
@@ -39,12 +39,12 @@ export default {
 
     return {
       isMobile: false,
-      navigation: ['women', 'man', 'kids'],
+      navigation: [{ title: 'All', link: '/products' }, { title: 'kitchen', link: '#' }, { title: 'Utility', link: '#' }],
       searchValue: '',
       title: 'Storefront UI',
       logo: {
-        mobile: { url: '/assets/logo.svg' },
-        desktop: { url: '/assets/logo.svg' }
+        mobile: { url: '/logo.svg' },
+        desktop: { url: '/logo.svg' }
       },
       activeIcon: 'account',
       isSticky: true,

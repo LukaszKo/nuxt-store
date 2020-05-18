@@ -10,13 +10,13 @@
           <SfMenuItem :label="item" />
         </SfListItem>
       </SfList>
-      <div v-else :style="{ display: 'flex', ...itemSpacer }">
+      <div v-else :style="{ display: 'flex' }">
         <SfImage
           v-for="picture in col.pictures"
           :key="picture"
           width="12"
           height="12"
-          :src="'/assets/storybook/SfFooter/' + picture + '.svg'"
+          :src="'/' + picture + '.svg'"
           :style="{ margin: '0 1.5rem 0 0' }"
         />
       </div>
