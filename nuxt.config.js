@@ -52,7 +52,12 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.BASE_URL,
+    proxy: true
+  },
+  proxy: {
+
+    '/api/': { target: 'https://api.bigcommerce.com', pathRewrite: { '^/api/': '' } }
   },
   /*
    ** Build configuration
@@ -60,5 +65,11 @@ export default {
   build: {
     transpile: [/^@storefront-ui/],
     extend (config, ctx) {}
+  },
+  env: {
+    BASE_URL: process.env.BASE_URL,
+    CLIENT_ID: process.env.CLIENT_ID,
+    ACCESS_TOKEN: process.env.ACCESS_TOKEN,
+    AUTHORIZE_URL: process.env.AUTHORIZE_URL
   }
 }

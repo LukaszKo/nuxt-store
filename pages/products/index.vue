@@ -5,7 +5,10 @@
     </div>
     <div class="main section">
       <div class="products">
-        <div v-if="category" class="products__list">
+        <p v-if="$fetchState.pending">
+          Fetching post...
+        </p>
+        <div v-else class="products__list">
           <SfProductCard
             v-for="(product, i) in category.products.edges"
             :key="i"
@@ -24,13 +27,12 @@
 import { SfProductCard } from '@storefront-ui/vue'
 export default {
   components: { SfProductCard },
-  async asyncData ({ params, $axios }) {
-    const result = await $axios({
+  async fetch () {
+    const result = await this.$axios({
       method: 'POST',
       url: process.env.BASE_URL,
       headers: {
-        Authorization:
-          `Bearer ${process.env.API_TOKEN}`
+        Authorization: `Bearer ${this.getToken}`
       },
       data: {
         query: `
@@ -63,17 +65,20 @@ export default {
         `
       }
     })
-
-    const productsData = result.data.data.site
-    return { category: productsData }
+    this.category = result.data.data.site
   },
-  setup () {
+  data () {
     return {
       breadcrumbs: [
         { text: 'Home', link: '#' },
         { text: 'All', link: '#' }
       ],
-      category: {}
+      category: null
+    }
+  },
+  computed: {
+    getToken () {
+      return this.$store.state.core.token
     }
   }
 }
