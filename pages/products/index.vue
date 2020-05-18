@@ -5,10 +5,13 @@
     </div>
     <div class="main section">
       <div class="products">
-        <!-- <p v-if="$fetchState.pending">
+        <p v-if="$fetchState.pending">
           Fetching post...
-        </p> -->
-        <div v-if="category && category.products" class="products__list">
+        </p>
+        <p v-else-if="$fetchState.error">
+          Error while fetching posts: {{ $fetchState.error.message }}
+        </p>
+        <div v-else class="products__list">
           <SfProductCard
             v-for="(product, i) in category.products.edges"
             :key="i"
@@ -32,7 +35,7 @@ export default {
       method: 'POST',
       url: process.env.BASE_URL,
       headers: {
-        Authorization: `Bearer ${this.getToken}`
+        Authorization: `Bearer ${this.$store.getters['core/getToken']}`
       },
       data: {
         query: `
