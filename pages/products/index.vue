@@ -8,7 +8,7 @@
         <!-- <p v-if="$fetchState.pending">
           Fetching post...
         </p> -->
-        <div class="products__list">
+        <div v-if="category && category.products" class="products__list">
           <SfProductCard
             v-for="(product, i) in category.products.edges"
             :key="i"
