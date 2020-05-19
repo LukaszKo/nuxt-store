@@ -64,6 +64,7 @@ export default {
     BASE_URL: process.env.BASE_URL,
     CLIENT_ID: process.env.CLIENT_ID,
     ACCESS_TOKEN: process.env.ACCESS_TOKEN,
-    AUTHORIZE_URL: process.env.AUTHORIZE_URL
+    AUTHORIZE_URL: process.env.AUTHORIZE_URL,
+    SERVER_URL: process.env.SERVER_URL
   }
 }
