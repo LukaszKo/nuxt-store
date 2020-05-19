@@ -37,9 +37,7 @@ import { SfHero, SfBanner, SfBannerGrid } from '@storefront-ui/vue'
 export default {
   name: 'Home',
   components: { SfHero, SfBanner, SfBannerGrid },
-  created () {
-    this.$store.dispatch('core/authorize')
-  },
+  middleware: 'check-auth',
   setup () {
     return {
       heroes: [

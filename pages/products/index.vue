@@ -30,17 +30,10 @@
 import { SfProductCard } from '@storefront-ui/vue'
 export default {
   components: { SfProductCard },
-  middleware: 'auth',
+  middleware: 'check-auth',
   async fetch () {
-    await this.$store.dispatch('core/authorize')
-    const result = await this.$axios({
-      method: 'POST',
-      url: process.env.BASE_URL,
-      headers: {
-        Authorization: `Bearer ${this.getToken}`
-      },
-      data: {
-        query: `
+    const result = await this.$store.dispatch('core/runQuery', {
+      query: `
           query paginateProducts {
             site {
               products {
@@ -68,9 +61,8 @@ export default {
             }
           }
         `
-      }
     })
-    this.category = result.data.data.site
+    this.category = result.data.site
   },
   data () {
     return {

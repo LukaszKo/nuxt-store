@@ -16,10 +16,8 @@ export const getters = {
 }
 
 export const actions = {
-  async authorize ({ commit, state }, payload) {
-    if (state.token) {
-      return
-    }
+  async authorize ({ commit, state }) {
+    if (state.token) { return }
     const body = {
       channel_id: 1,
       expires_at: 1602288000,
@@ -29,6 +27,12 @@ export const actions = {
       `${process.env.SERVER_URL}/api/auth`,
       body
     )
+    this.$axios.setHeader('Authorization', `Bearer ${data.token}`, 'common')
     commit('setToken', data.token)
+  },
+  runQuery ({ state }, payload) {
+    return this.$axios.$post(process.env.BASE_URL, payload, {
+      headers: { Authorization: `Bearer ${state.token}` }
+    })
   }
 }
