@@ -35,9 +35,9 @@ export default {
     const result = await this.$store.dispatch(
       'runQuery',
       `
-          query paginateProducts {
+          query products {
             site {
-              products {
+              products (first: 30) {
                 edges {
                   node {
                     entityId

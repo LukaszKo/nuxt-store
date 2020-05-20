@@ -81,9 +81,9 @@ export default {
           return axios.post(`${server}/api/query`, {
             token,
             query: `
-            query paginateProducts {
+            query products {
               site {
-                products {
+                products (first: 30) {
                   edges {
                     node {
                       entityId
