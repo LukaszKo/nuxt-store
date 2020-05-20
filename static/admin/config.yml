@@ -1,6 +1,6 @@
 backend:
   name: github
-  branch: LukaszKo/nuxt-store
+  repo: LukaszKo/nuxt-store
 
 media_folder: static/img
 public_folder: /img
