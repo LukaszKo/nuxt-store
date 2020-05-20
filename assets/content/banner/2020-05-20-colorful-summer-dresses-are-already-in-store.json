@@ -1,7 +1,9 @@
 {
-  "title": "Colorful summer dresses are already in store",
-  "subtitle": "SUMMER COLLECTION 2019",
-  "button": "Learn more",
+  "title": "Cocktail & Party",
+  "subtitle": "Dresses",
+  "button": "Shop now",
   "background": "#eceff1",
-  "image": "/img/bannerc.png"
+  "image": "/img/ban1.jpg",
+  "slot": "banner-A",
+  "description": "Find stunning women's cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands."
 }
