@@ -38,6 +38,11 @@ export default {
   name: 'Home',
   components: { SfHero, SfBanner, SfBannerGrid },
   middleware: 'check-auth',
+  head () {
+    return {
+      script: [{ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }]
+    }
+  },
   setup () {
     return {
       heroes: [
