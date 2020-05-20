@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   mode: 'universal',
   /*
@@ -23,13 +25,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['@/assets/css/main.scss'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [
-    '@/plugins/composition-api'
-  ],
+  plugins: ['@/plugins/composition-api'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -51,8 +51,7 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {
-  },
+  axios: {},
   /*
    ** Build configuration
    */
@@ -66,5 +65,71 @@ export default {
     ACCESS_TOKEN: process.env.ACCESS_TOKEN,
     AUTHORIZE_URL: process.env.AUTHORIZE_URL,
     SERVER_URL: process.env.SERVER_URL
+  },
+  generate: {
+    routes () {
+      const body = {
+        channel_id: 1,
+        expires_at: 1602288000,
+        allowed_cors_origins: ['https://nuxt-store.netlify.app']
+      }
+      const server = process.env.SERVER_URL
+      return axios
+        .post(`${server}/api/auth`, body)
+        .then((response) => {
+          const token = response.data.data.token
+          return axios.post(`${server}/api/query`, {
+            token,
+            query: `
+            query paginateProducts {
+              site {
+                products {
+                  edges {
+                    node {
+                      entityId
+                      name
+                      addToCartUrl
+                      options {
+                        edges {
+                          node {
+                            displayName
+                            values {
+                              edges {
+                                node {
+                                  label
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                      addToWishlistUrl
+                      plainTextDescription
+                      path
+                      defaultImage {
+                        url(width: 150)
+                      }
+                      prices {
+                        price {
+                          value
+                          currencyCode
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          `
+          })
+        })
+        .then((res) => {
+          const products = res.data.data.site.products.edges
+          return products.map(product => ({
+            route: '/products/' + product.node.entityId,
+            payload: product.node
+          }))
+        })
+    }
   }
 }

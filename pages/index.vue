@@ -46,16 +46,14 @@ export default {
           subtitle: 'SUMMER COLLECTION 2019',
           buttonText: 'Learn more',
           background: '#eceff1',
-          image:
-            'https://github.com/DivanteLtd/vsf-capybara/blob/v1.0-rc.1/assets/banner/png/bannerC.png?raw=true'
+          image: '/bannerC.png'
         },
         {
           title: 'Colorful summer dresses are already in store',
           subtitle: 'SUMMER COLLECTION 2019',
           buttonText: 'Learn more',
           background: '#efebe9',
-          image:
-            'https://github.com/DivanteLtd/vsf-capybara/blob/v1.0-rc.1/assets/banner/png/full_width_banner.png?raw=true',
+          image: '/full_width_banner.png',
           className:
             'sf-hero-item--position-bg-top-left sf-hero-item--align-right'
         },
@@ -64,8 +62,7 @@ export default {
           subtitle: 'SUMMER COLLECTION 2019',
           buttonText: 'Learn more',
           background: '#fce4ec',
-          image:
-            'https://github.com/DivanteLtd/vsf-capybara/blob/v1.0-rc.1/assets/banner/png/full_width_banner2.png?raw=true'
+          image: '/full_width_banner2.png'
         }
       ],
       banners: [

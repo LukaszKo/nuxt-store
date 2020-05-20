@@ -47,7 +47,7 @@ export default {
         desktop: { url: '/logo.svg' }
       },
       activeIcon: 'account',
-      isSticky: true,
+      isSticky: false,
       searchPlaceholder: 'Search for items',
       cartIcon: 'empty_cart',
       wishlistIcon: 'heart',

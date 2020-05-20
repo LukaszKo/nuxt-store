@@ -17,7 +17,7 @@
             :key="i"
             :title="product.node.name"
             :image="product.node.defaultImage.url"
-            :link="'/products' + product.node.path"
+            :link="'/products/' + product.node.entityId"
             :regular-price="'$' + product.node.prices.price.value.toFixed(2)"
             class="products__product-card"
           />
@@ -32,20 +32,33 @@ export default {
   components: { SfProductCard },
   middleware: 'check-auth',
   async fetch () {
-    const result = await this.$store.dispatch('core/runQuery', {
-      query: `
+    const result = await this.$store.dispatch(
+      'runQuery',
+      `
           query paginateProducts {
             site {
               products {
-                pageInfo {
-                  startCursor
-                  endCursor
-                }
                 edges {
-                  cursor
                   node {
                     entityId
                     name
+                    addToCartUrl
+                    options {
+                      edges {
+                        node {
+                          displayName
+                          values {
+                            edges {
+                              node {
+                                label
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    addToWishlistUrl
+                    plainTextDescription
                     path
                     defaultImage {
                       url(width: 150)
@@ -53,6 +66,7 @@ export default {
                     prices {
                       price {
                         value
+                        currencyCode
                       }
                     }
                   }
@@ -61,7 +75,7 @@ export default {
             }
           }
         `
-    })
+    )
     this.category = result.data.site
   },
   data () {
@@ -75,7 +89,7 @@ export default {
   },
   computed: {
     getToken () {
-      return this.$store.state.core.token
+      return this.$store.state.token
     }
   }
 }

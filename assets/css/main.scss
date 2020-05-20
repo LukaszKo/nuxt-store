@@ -1,0 +1,7 @@
+@import "~@storefront-ui/vue/styles";
+
+$spacer-big: 64px;
+.section {
+    padding-left: $spacer-big;
+    padding-right: $spacer-big;
+  }

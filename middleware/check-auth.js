@@ -1,3 +1,3 @@
 export default async ({ store }) => {
-  await store.dispatch('core/authorize')
+  await store.dispatch('authorize')
 }

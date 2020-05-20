@@ -1,5 +1,6 @@
 export const state = () => ({
-  token: null
+  token: null,
+  product: null
 })
 
 export const mutations = {
@@ -8,6 +9,9 @@ export const mutations = {
   },
   clearToken (state) {
     state.token = null
+  },
+  setProduct (state, payload) {
+    state.product = payload
   }
 }
 
@@ -31,8 +35,6 @@ export const actions = {
     commit('setToken', data.token)
   },
   runQuery ({ state }, payload) {
-    return this.$axios.$post(process.env.BASE_URL, payload, {
-      headers: { Authorization: `Bearer ${state.token}` }
-    })
+    return this.$axios.$post(`${process.env.SERVER_URL}/api/query`, { query: payload, token: state.token })
   }
 }
