@@ -33,13 +33,19 @@ export default {
     SfLink
   },
   setup () {
-    function cartHandler () {}
+    function cartHandler () {
+      window.location = 'https://nuxt-store.mybigcommerce.com/checkout'
+    }
     function accountHandler () {}
     function wishlistHandler () {}
 
     return {
       isMobile: false,
-      navigation: [{ title: 'All', link: '/products' }, { title: 'kitchen', link: '#' }, { title: 'Utility', link: '#' }],
+      navigation: [
+        { title: 'All', link: '/products' },
+        { title: 'kitchen', link: '#' },
+        { title: 'Utility', link: '#' }
+      ],
       searchValue: '',
       title: 'Storefront UI',
       logo: {
@@ -62,8 +68,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 header {
-    position: fixed;
-    top:0;
-    left: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 </style>
