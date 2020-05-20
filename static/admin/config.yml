@@ -18,10 +18,9 @@ collections:
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Subtitle', name: 'subtitle', widget: 'string' }
       - { label: 'Button', name: 'button', widget: 'string' }
-      - { label: 'Background', name: 'background', widget: 'string' }
       - { label: 'Image', name: 'image', widget: 'image' }
       - { label: 'Slot', name: 'slot', widget: 'string' }
-      - { label: 'Description', name: 'description', widget: 'string' }
+      - { label: 'Description', name: 'description', widget: 'string', required: false }
   - name: 'heroes'
     label: 'Heroes'
     format: 'json'
