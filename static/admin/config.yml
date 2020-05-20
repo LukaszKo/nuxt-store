@@ -20,4 +20,19 @@ collections:
       - { label: 'Button', name: 'button', widget: 'string' }
       - { label: 'Background', name: 'background', widget: 'string' }
       - { label: 'Image', name: 'image', widget: 'image' }
-      - { label: 'Slot', name: 'slot', widget: 'string', required: false }
+      - { label: 'Slot', name: 'slot', widget: 'string' }
+      - { label: 'Description', name: 'description', widget: 'string' }
+  - name: 'heroes'
+    label: 'Heroes'
+    format: 'json'
+    folder: 'assets/content/heroes'
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    editor:
+      preview: false
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Subtitle', name: 'subtitle', widget: 'string' }
+      - { label: 'Button', name: 'button', widget: 'string' }
+      - { label: 'Background', name: 'background', widget: 'string' }
+      - { label: 'Image', name: 'image', widget: 'image' }
