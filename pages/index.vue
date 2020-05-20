@@ -38,6 +38,17 @@ export default {
   name: 'Home',
   components: { SfHero, SfBanner, SfBannerGrid },
   middleware: 'check-auth',
+  async asyncData ({ isDev, route, store, env, params, query, req, res, redirect, error }) {
+    const files = await require.context('~/assets/content/banner/', false, /\.json$/)
+    const list = files.keys().map((key) => {
+      const res = files(key)
+      res.slug = key.slice(2, -5)
+      return res
+    })
+    return {
+      heroes: list.slice(0, 2)
+    }
+  },
   head () {
     return {
       script: [{ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }]
@@ -45,31 +56,6 @@ export default {
   },
   setup () {
     return {
-      heroes: [
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          buttonText: 'Learn more',
-          background: '#eceff1',
-          image: '/bannerC.png'
-        },
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          buttonText: 'Learn more',
-          background: '#efebe9',
-          image: '/full_width_banner.png',
-          className:
-            'sf-hero-item--position-bg-top-left sf-hero-item--align-right'
-        },
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          buttonText: 'Learn more',
-          background: '#fce4ec',
-          image: '/full_width_banner2.png'
-        }
-      ],
       banners: [
         {
           slot: 'banner-A',

@@ -20,3 +20,4 @@ collections:
       - { label: 'Button', name: 'button', widget: 'string' }
       - { label: 'Background', name: 'background', widget: 'string' }
       - { label: 'Image', name: 'image', widget: 'image' }
+      - { label: 'Slot', name: 'slot', widget: 'string', required: false }
