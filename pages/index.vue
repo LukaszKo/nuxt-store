@@ -39,14 +39,21 @@ export default {
   components: { SfHero, SfBanner, SfBannerGrid },
   middleware: 'check-auth',
   async asyncData ({ isDev, route, store, env, params, query, req, res, redirect, error }) {
-    const files = await require.context('~/assets/content/banner/', false, /\.json$/)
-    const list = files.keys().map((key) => {
-      const res = files(key)
+    const bannersFiles = await require.context('~/assets/content/banner/', false, /\.json$/)
+    const banners = bannersFiles.keys().map((key) => {
+      const res = bannersFiles(key)
+      res.slug = key.slice(2, -5)
+      return res
+    })
+    const heroesFiles = await require.context('~/assets/content/heroes/', false, /\.json$/)
+    const heroes = heroesFiles.keys().map((key) => {
+      const res = heroesFiles(key)
       res.slug = key.slice(2, -5)
       return res
     })
     return {
-      heroes: list.slice(0, 2)
+      banners,
+      heroes
     }
   },
   head () {
@@ -56,42 +63,6 @@ export default {
   },
   setup () {
     return {
-      banners: [
-        {
-          slot: 'banner-A',
-          subtitle: 'Dresses',
-          title: 'Cocktail & Party',
-          description:
-            "Find stunning women's cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.",
-          buttonText: 'Shop now',
-          image: '/ban1.jpg',
-          class: ['sf-banner--slim']
-        },
-        {
-          slot: 'banner-B',
-          subtitle: 'T-Shirts',
-          title: 'The Office Life',
-          buttonText: 'Shop now',
-          image: '/ban2.jpg',
-          class: ['sf-banner--slim']
-        },
-        {
-          slot: 'banner-C',
-          subtitle: 'Summer Sandals',
-          title: 'Eco Sandals',
-          buttonText: 'Shop now',
-          image: '/bannerE.png',
-          class: ['sf-banner--slim']
-        },
-        {
-          slot: 'banner-D',
-          subtitle: 'Summer Sandals',
-          title: 'Eco Sandals',
-          buttonText: 'Shop now',
-          image: '/bannerF.png',
-          class: ['sf-banner--slim']
-        }
-      ],
       bannerGrid: 1
     }
   }
