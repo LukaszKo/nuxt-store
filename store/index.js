@@ -32,7 +32,7 @@ export const actions = {
       allowed_cors_origins: ['https://nuxt-store.netlify.app']
     }
     const { data } = await this.$axios.$post(
-      `${process.env.FUNCTIONS_API}/auth`,
+      `${process.env.SERVER_URL}/api/auth`,
       body
     )
     this.$axios.setHeader('Authorization', `Bearer ${data.token}`, 'common')
