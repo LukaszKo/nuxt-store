@@ -47,22 +47,7 @@ export default {
   name: 'Home',
   components: { SfHero, SfBanner, SfBannerGrid, SfCallToAction },
   middleware: ['check-auth'],
-  data () {
-    return {
-      bannerGrid: 1,
-      heroes: null,
-      banners: null,
-      title: 'Subscribe to Newsletters',
-      description:
-        'Be aware of upcoming sales and events. Receive gifts and special offers!',
-      buttonText: 'Subscribe',
-      image: 'assets/storybook/Home/newsletter.jpg',
-      background: '#e1e3e2'
-    }
-  },
-  async mounted () {
-    await this.$nextTick()
-    this.$nuxt.$loading.start()
+  async fetch () {
     const bannersFiles = await require.context('~/assets/content/banner/', false, /\.json$/)
     const banners = bannersFiles.keys().map((key) => {
       const res = bannersFiles(key)
@@ -78,7 +63,19 @@ export default {
 
     this.banners = banners
     this.heroes = heroes
-    this.$nuxt.$loading.finish()
+  },
+  data () {
+    return {
+      bannerGrid: 1,
+      heroes: null,
+      banners: null,
+      title: 'Subscribe to Newsletters',
+      description:
+        'Be aware of upcoming sales and events. Receive gifts and special offers!',
+      buttonText: 'Subscribe',
+      image: '/newsletter.webp',
+      background: '#e1e3e2'
+    }
   }
 }
 </script>

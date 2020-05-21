@@ -8,7 +8,17 @@
     <SfDivider class="main" />
     <div class="main">
       <div class="products">
-        <div v-if="category" class="products__list">
+        <content-loader v-if="$fetchState.pending">
+          <rect
+            x="0"
+            y="0"
+            rx="3"
+            ry="3"
+            width="400"
+            height="100"
+          />
+        </content-loader>
+        <div v-else class="products__list">
           <SfProductCard
             v-for="(product, i) in category.products.edges"
             :key="i"
@@ -19,16 +29,6 @@
             class="products__product-card"
           />
         </div>
-        <content-loader v-else>
-          <rect
-            x="0"
-            y="0"
-            rx="3"
-            ry="3"
-            width="400"
-            height="100"
-          />
-        </content-loader>
       </div>
     </div>
   </div>
@@ -39,23 +39,7 @@ import { ContentLoader } from 'vue-content-loader'
 export default {
   components: { ContentLoader, SfProductCard, SfHeading, SfDivider },
   middleware: ['check-auth'],
-  data () {
-    return {
-      breadcrumbs: [
-        { text: 'Home', link: '#' },
-        { text: 'All', link: '#' }
-      ],
-      category: null
-    }
-  },
-  computed: {
-    getToken () {
-      return this.$store.state.token
-    }
-  },
-  async mounted () {
-    await this.$nextTick()
-    this.$nuxt.$loading.start()
+  async fetch () {
     const result = await this.$store.dispatch(
       'runQuery',
       `
@@ -101,8 +85,24 @@ export default {
         `
     )
     this.category = result.data.site
-    this.$nuxt.$loading.finish()
+  },
+  data () {
+    return {
+      breadcrumbs: [
+        { text: 'Home', link: '#' },
+        { text: 'All', link: '#' }
+      ],
+      category: null
+    }
+  },
+  computed: {
+    getToken () {
+      return this.$store.state.token
+    }
   }
+  // async mounted () {
+
+  // }
 }
 </script>
 <style lang="scss" scoped>
