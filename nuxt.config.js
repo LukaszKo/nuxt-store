@@ -124,11 +124,19 @@ export default {
           })
         })
         .then((res) => {
+          const routes = []
           const products = res.data.data.site.products.edges
-          return products.map(product => ({
-            route: '/products/' + product.node.entityId,
-            payload: product.node
-          }))
+          products.map((product) => {
+            routes.push({
+              route: '/shop-all/' + product.node.entityId,
+              payload: product.node
+            })
+            routes.push({
+              route: '/garden/' + product.node.entityId,
+              payload: product.node
+            })
+          })
+          return routes
         })
     }
   }
