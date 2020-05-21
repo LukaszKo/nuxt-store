@@ -16,9 +16,9 @@
     @change:search="searchValue = $event"
   >
     <template #navigation>
-      <SfHeaderNavigationItem v-for="item in navigation" :key="item.title">
-        <SfLink :href="item.link">
-          {{ item.title }}
+      <SfHeaderNavigationItem v-for="item in categories" :key="item.name">
+        <SfLink :href="item.path">
+          {{ item.name }}
         </SfLink>
       </SfHeaderNavigationItem>
     </template>
@@ -41,11 +41,6 @@ export default {
 
     return {
       isMobile: false,
-      navigation: [
-        { title: 'All', link: '/products' },
-        { title: 'kitchen', link: '#' },
-        { title: 'Utility', link: '#' }
-      ],
       searchValue: '',
       title: 'Storefront UI',
       logo: {
@@ -61,7 +56,25 @@ export default {
       cartItemsQty: '0',
       cartHandler,
       accountHandler,
-      wishlistHandler
+      wishlistHandler,
+      categories: [
+        {
+          name: 'Shop All',
+          path: '/shop-all'
+        },
+        {
+          name: 'Garden',
+          path: '/garden'
+        },
+        {
+          name: 'Kitchen',
+          path: '/kitchen'
+        },
+        {
+          name: 'Bath',
+          path: '/bath'
+        }
+      ]
     }
   }
 }

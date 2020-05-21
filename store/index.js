@@ -1,6 +1,7 @@
 export const state = () => ({
   token: null,
-  product: null
+  product: null,
+  categories: []
 })
 
 export const mutations = {
@@ -12,6 +13,9 @@ export const mutations = {
   },
   setProduct (state, payload) {
     state.product = payload
+  },
+  setCategories (state, payload) {
+    state.categories = payload
   }
 }
 

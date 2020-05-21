@@ -1,23 +1,17 @@
 <template>
   <div class>
     <div class="main title">
-      <h1>All Products</h1>
+      <h1>Garden</h1>
     </div>
     <div class="main section">
       <div class="products">
-        <p v-if="$fetchState.pending">
-          Fetching post...
-        </p>
-        <p v-else-if="$fetchState.error">
-          Error while fetching posts: {{ $fetchState.error.message }}
-        </p>
-        <div v-else class="products__list">
+        <div v-if="products" class="products__list">
           <SfProductCard
-            v-for="(product, i) in category.products.edges"
+            v-for="(product, i) in products"
             :key="i"
             :title="product.node.name"
             :image="product.node.defaultImage.url"
-            :link="'/products/' + product.node.entityId"
+            :link="'/garden/' + product.node.entityId"
             :regular-price="'$' + product.node.prices.price.value.toFixed(2)"
             class="products__product-card"
           />
@@ -30,67 +24,63 @@
 import { SfProductCard } from '@storefront-ui/vue'
 export default {
   components: { SfProductCard },
-  middleware: 'check-auth',
-  async fetch () {
-    const result = await this.$store.dispatch(
-      'runQuery',
-      `
-          query products {
-            site {
-              products (first: 30) {
-                edges {
-                  node {
-                    entityId
-                    name
-                    addToCartUrl
-                    options {
-                      edges {
-                        node {
-                          displayName
-                          values {
-                            edges {
-                              node {
-                                label
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                    addToWishlistUrl
-                    plainTextDescription
-                    path
-                    defaultImage {
-                      url(width: 150)
-                    }
-                    prices {
-                      price {
-                        value
-                        currencyCode
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `
-    )
-    this.category = result.data.site
-  },
+  middleware: ['check-auth'],
   data () {
     return {
-      breadcrumbs: [
-        { text: 'Home', link: '#' },
-        { text: 'All', link: '#' }
-      ],
-      category: null
+      products: null
     }
   },
   computed: {
     getToken () {
       return this.$store.state.token
     }
+  },
+  async mounted () {
+    await this.$nextTick()
+    this.$nuxt.$loading.start()
+    const result = await this.$store.dispatch(
+      'runQuery',
+      `
+            query CategoryByUrl {
+            site {
+                route(path: "/garden/") {
+                node {
+                    id
+                    ... on Category {
+                    name
+                    entityId
+                    description
+                    products {
+                        edges {
+                        node {
+                            entityId
+                            name
+                            addToCartUrl
+                            defaultImage {
+                            url(width: 1200)
+                            }
+                            prices {
+                            price {
+                                value
+                                currencyCode
+                            }
+                            }
+                            addToWishlistUrl
+                            plainTextDescription
+                            path
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            }
+        `
+    )
+    this.products = result.data.site.route.node.products.edges
+
+    this.$nuxt.$loading.finish()
   }
 }
 </script>

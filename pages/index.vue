@@ -37,8 +37,17 @@ import { SfHero, SfBanner, SfBannerGrid } from '@storefront-ui/vue'
 export default {
   name: 'Home',
   components: { SfHero, SfBanner, SfBannerGrid },
-  middleware: 'check-auth',
-  async asyncData ({ isDev, route, store, env, params, query, req, res, redirect, error }) {
+  middleware: ['check-auth'],
+  data () {
+    return {
+      bannerGrid: 1,
+      heroes: null,
+      banners: null
+    }
+  },
+  async mounted () {
+    await this.$nextTick()
+    this.$nuxt.$loading.start()
     const bannersFiles = await require.context('~/assets/content/banner/', false, /\.json$/)
     const banners = bannersFiles.keys().map((key) => {
       const res = bannersFiles(key)
@@ -51,20 +60,10 @@ export default {
       res.slug = key.slice(2, -5)
       return res
     })
-    return {
-      banners,
-      heroes
-    }
-  },
-  head () {
-    return {
-      script: [{ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }]
-    }
-  },
-  setup () {
-    return {
-      bannerGrid: 1
-    }
+
+    this.banners = banners
+    this.heroes = heroes
+    this.$nuxt.$loading.finish()
   }
 }
 </script>
