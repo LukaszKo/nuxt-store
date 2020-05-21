@@ -1,9 +1,12 @@
 <template>
-  <div class>
-    <div class="main title">
-      <h1>Shop All</h1>
-    </div>
-    <div class="main section">
+  <div>
+    <SfHeading
+      :level="1"
+      title="Shop All"
+      subtitle=""
+    />
+    <SfDivider class="main" />
+    <div class="main">
       <div class="products">
         <div v-if="category" class="products__list">
           <SfProductCard
@@ -16,14 +19,25 @@
             class="products__product-card"
           />
         </div>
+        <content-loader v-else>
+          <rect
+            x="0"
+            y="0"
+            rx="3"
+            ry="3"
+            width="400"
+            height="100"
+          />
+        </content-loader>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { SfProductCard } from '@storefront-ui/vue'
+import { SfProductCard, SfHeading, SfDivider } from '@storefront-ui/vue'
+import { ContentLoader } from 'vue-content-loader'
 export default {
-  components: { SfProductCard },
+  components: { ContentLoader, SfProductCard, SfHeading, SfDivider },
   middleware: ['check-auth'],
   data () {
     return {
@@ -98,6 +112,8 @@ $spacer-extra-big: 128px;
 @import "~@storefront-ui/vue/styles";
 .main {
   display: flex;
+  max-width: 1240px;
+  margin: auto;
 }
 
 .title {
@@ -109,21 +125,14 @@ $spacer-extra-big: 128px;
 .products {
   box-sizing: border-box;
   flex: 1;
-  margin: 0 - $spacer;
-  @include for-desktop {
-    margin: $spacer-big;
-  }
+  margin: $spacer 0;
+
   &__list {
     display: flex;
     flex-wrap: wrap;
   }
   &__product-card {
     flex: 0 0 50%;
-    padding: $spacer;
-    @include for-desktop {
-      flex: 0 0 25%;
-      padding: $spacer-big;
-    }
   }
   &__pagination {
     @include for-desktop {
@@ -131,14 +140,6 @@ $spacer-extra-big: 128px;
       justify-content: center;
       margin-top: $spacer-extra-big;
     }
-  }
-}
-.section {
-  padding-left: $spacer-big;
-  padding-right: $spacer-big;
-  @include for-desktop {
-    padding-left: 0;
-    padding-right: 0;
   }
 }
 </style>

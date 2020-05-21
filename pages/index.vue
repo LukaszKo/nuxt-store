@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <section>
-      <SfHero>
+      <SfHero style="max-width: 1240px; margin: auto">
         <SfHeroItem
           v-for="(hero, i) in heroes"
           :key="i"
@@ -29,20 +29,35 @@
         </template>
       </SfBannerGrid>
     </section>
+    <div style="max-width: 1240px; margin: auto">
+      <SfCallToAction
+        :title="title"
+        :description="description"
+        :button-text="buttonText"
+        :image="image"
+        :background="background"
+      />
+    </div>
   </div>
 </template>
 <script>
 import '@storefront-ui/vue/styles.scss'
-import { SfHero, SfBanner, SfBannerGrid } from '@storefront-ui/vue'
+import { SfHero, SfBanner, SfBannerGrid, SfCallToAction } from '@storefront-ui/vue'
 export default {
   name: 'Home',
-  components: { SfHero, SfBanner, SfBannerGrid },
+  components: { SfHero, SfBanner, SfBannerGrid, SfCallToAction },
   middleware: ['check-auth'],
   data () {
     return {
       bannerGrid: 1,
       heroes: null,
-      banners: null
+      banners: null,
+      title: 'Subscribe to Newsletters',
+      description:
+        'Be aware of upcoming sales and events. Receive gifts and special offers!',
+      buttonText: 'Subscribe',
+      image: 'assets/storybook/Home/newsletter.jpg',
+      background: '#e1e3e2'
     }
   },
   async mounted () {
