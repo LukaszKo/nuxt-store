@@ -74,46 +74,51 @@ export default {
         expires_at: 1602288000,
         allowed_cors_origins: ['https://nuxt-store.netlify.app']
       }
-      const server = process.env.SERVER_URL
+      const server = process.env.FUNCTIONS_API || 'https://nuxt-store.netlify.app/.netlify/functions'
       return axios
-        .post(`${server}/api/auth`, body)
+        .post(`${server}/auth`, body)
         .then((response) => {
           const token = response.data.data.token
-          return axios.post(`${server}/api/query`, {
-            token,
-            query: `
-            query products {
-              site {
-                products (first: 30) {
-                  edges {
-                    node {
-                      entityId
-                      name
-                      addToCartUrl
-                      options {
-                        edges {
-                          node {
-                            displayName
-                            values {
-                              edges {
-                                node {
-                                  label
+          const query = {
+            query: {
+              site: {
+                products: {
+                  __args: {
+                    first: 30
+                  },
+                  edges: {
+                    node: {
+                      entityId: true,
+                      name: true,
+                      addToCartUrl: true,
+                      options: {
+                        edges: {
+                          node: {
+                            displayName: true,
+                            values: {
+                              edges: {
+                                node: {
+                                  label: true
                                 }
                               }
                             }
                           }
                         }
-                      }
-                      addToWishlistUrl
-                      plainTextDescription
-                      path
-                      defaultImage {
-                        url(width: 150)
-                      }
-                      prices {
-                        price {
-                          value
-                          currencyCode
+                      },
+                      addToWishlistUrl: true,
+                      plainTextDescription: true,
+                      path: true,
+                      defaultImage: {
+                        url: {
+                          __args: {
+                            width: 150
+                          }
+                        }
+                      },
+                      prices: {
+                        price: {
+                          value: true,
+                          currencyCode: true
                         }
                       }
                     }
@@ -121,7 +126,10 @@ export default {
                 }
               }
             }
-          `
+          }
+          return axios.post(`${server}/query`, {
+            token,
+            query
           })
         })
         .then((res) => {
