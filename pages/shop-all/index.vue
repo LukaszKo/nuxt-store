@@ -1,10 +1,6 @@
 <template>
   <div>
-    <SfHeading
-      :level="1"
-      title="Shop All"
-      subtitle=""
-    />
+    <SfHeading :level="1" title="Shop All" subtitle />
     <SfDivider class="main" />
     <div class="main">
       <div class="products">
@@ -40,49 +36,57 @@ export default {
   components: { ContentLoader, SfProductCard, SfHeading, SfDivider },
   middleware: ['check-auth'],
   async fetch () {
-    const result = await this.$store.dispatch(
-      'runQuery',
-      `
-          query products {
-            site {
-              products (first: 30) {
-                edges {
-                  node {
-                    entityId
-                    name
-                    addToCartUrl
-                    options {
-                      edges {
-                        node {
-                          displayName
-                          values {
-                            edges {
-                              node {
-                                label
-                              }
-                            }
+    const query = {
+      query: {
+        site: {
+          products: {
+            __args: {
+              first: 30
+            },
+            edges: {
+              node: {
+                entityId: true,
+                name: true,
+                addToCartUrl: true,
+                options: {
+                  edges: {
+                    node: {
+                      displayName: true,
+                      values: {
+                        edges: {
+                          node: {
+                            label: true
                           }
                         }
                       }
                     }
-                    addToWishlistUrl
-                    plainTextDescription
-                    path
-                    defaultImage {
-                      url(width: 150)
+                  }
+                },
+                addToWishlistUrl: true,
+                plainTextDescription: true,
+                path: true,
+                defaultImage: {
+                  url: {
+                    __args: {
+                      width: 150
                     }
-                    prices {
-                      price {
-                        value
-                        currencyCode
-                      }
-                    }
+                  }
+                },
+                prices: {
+                  price: {
+                    value: true,
+                    currencyCode: true
                   }
                 }
               }
             }
           }
-        `
+        }
+      }
+    }
+    const result = await this.$store.dispatch(
+      'runQuery',
+      query
     )
     this.category = result.data.site
   },
@@ -100,9 +104,6 @@ export default {
       return this.$store.state.token
     }
   }
-  // async mounted () {
-
-  // }
 }
 </script>
 <style lang="scss" scoped>

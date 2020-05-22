@@ -64,7 +64,8 @@ export default {
     CLIENT_ID: process.env.CLIENT_ID,
     ACCESS_TOKEN: process.env.ACCESS_TOKEN,
     AUTHORIZE_URL: process.env.AUTHORIZE_URL,
-    SERVER_URL: process.env.SERVER_URL
+    SERVER_URL: process.env.SERVER_URL,
+    FUNCTIONS_API: process.env.FUNCTIONS_API
   },
   generate: {
     routes () {

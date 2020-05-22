@@ -1,10 +1,6 @@
 <template>
   <div class>
-    <SfHeading
-      :level="1"
-      title="Garden"
-      subtitle=""
-    />
+    <SfHeading :level="1" title="Garden" subtitle />
     <SfDivider class="main" />
     <div class="main">
       <div class="products">
@@ -40,46 +36,51 @@ export default {
   components: { SfProductCard, ContentLoader, SfHeading, SfDivider },
   middleware: ['check-auth'],
   async fetch () {
-    const result = await this.$store.dispatch(
-      'runQuery',
-      `
-            query CategoryByUrl {
-            site {
-                route(path: "/garden/") {
-                node {
-                    id
-                    ... on Category {
-                    name
-                    entityId
-                    description
-                    products {
-                        edges {
-                        node {
-                            entityId
-                            name
-                            addToCartUrl
-                            defaultImage {
-                            url(width: 1200)
-                            }
-                            prices {
-                            price {
-                                value
-                                currencyCode
-                            }
-                            }
-                            addToWishlistUrl
-                            plainTextDescription
-                            path
+    const query = {
+      query: {
+        site: {
+          route: {
+            __args: {
+              path: '/garden/'
+            },
+            node: {
+              id: true,
+              __on: {
+                __typeName: 'Category',
+                entityId: true,
+                name: true,
+                products: {
+                  edges: {
+                    node: {
+                      entityId: true,
+                      name: true,
+                      addToCartUrl: true,
+                      addToWishlistUrl: true,
+                      plainTextDescription: true,
+                      path: true,
+                      defaultImage: {
+                        url: {
+                          __args: {
+                            width: 150
+                          }
                         }
+                      },
+                      prices: {
+                        price: {
+                          value: true,
+                          currencyCode: true
                         }
+                      }
                     }
-                    }
+                  }
                 }
-                }
+              }
             }
-            }
-        `
-    )
+          }
+        }
+      }
+    }
+    const result = await this.$store.dispatch('runQuery', query)
     this.products = result.data.site.route.node.products.edges
   },
   data () {

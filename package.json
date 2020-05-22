@@ -16,6 +16,7 @@
     "@nuxtjs/pwa": "^3.0.0-0",
     "@storefront-ui/vue": "^0.7.11",
     "@vue/composition-api": "^0.5.0",
+    "json-to-graphql-query": "^2.0.0",
     "nuxt": "^2.0.0",
     "vue-content-loader": "^0.2.3"
   },
